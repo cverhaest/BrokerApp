@@ -1,0 +1,25 @@
+<aura:component controller="BrokerController">
+    <aura:attribute name="broker" type="Broker__c" />
+    
+    <aura:registerEvent name="modalClose" type="c:ModalCloseEvent"/>
+    
+    <div role="dialog" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <h2 class="slds-text-heading_medium">Create Broker</h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium">
+                <lightning:input name="Name" label="Name" value="{!v.broker.Name}" />
+                <lightning:input name="Email" type="email" label="Email" value="{!v.broker.Email__c}" />
+                <lightning:input name="Phone" type="tel" label="Mobile Phone" value="{!v.broker.Mobile_Phone__c}" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>
+            </div>
+            <div class="slds-modal__footer">
+                <lightning:button variant="neutral" label="Cancel" onclick="{!c.onCancel}" />
+                <lightning:button variant="brand" label="Save" onclick="{!c.onSave}" />
+            </div>
+        </div>
+    </div>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+    
+    
+</aura:component>

@@ -1,0 +1,90 @@
+<!--
+ - Created by Sonal_Chaudhary on 7/13/2017.
+ -->
+
+<aura:component description="BrokerWrapper" controller="BrokerController" implements="flexipage:availableForAllPageTypes,force:appHostable">
+    
+    <aura:attribute name="brokers" type="Broker__c[]"/>
+    <aura:attribute name="total" type="Integer"/>
+    <aura:attribute name="url" type="String"/>
+    <aura:attribute name="selectedBrokers" type="Map" default="{}"/>
+    <aura:attribute name="modal" type="Aura.Component"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!--<c:BrokerService aura:id="service"/>-->
+    
+    <aura:handler name="modalClose" event="c:ModalCloseEvent" action="{!c.handleModalClose}"/>
+    
+    <lightning:spinner aura:id="mySpinner" class="slds-hide"/>
+    
+    <div class="slds-m-around_medium">
+        <!--<lightning:input type="search" label="Search" name="search" />-->
+        
+        <div class="slds-p-top_small slds-p-bottom_small">
+            <div class="slds-box slds-box_small">
+                <lightning:buttonGroup >
+                    <lightning:button iconName="utility:refresh" onclick="{! c.doInit }" />
+                    <lightning:button label="New" onclick="{!c.handleOption}" />
+                    <lightning:button label="Edit" onclick="{!c.handleOption}" />
+                    <lightning:button label="Delete" onclick="{!c.handleOption}" />
+                </lightning:buttonGroup>
+            </div>
+        </div>
+        
+        <table class="slds-table slds-table_bordered slds-table_resizable-cols slds-table_fixed-layout" role="grid">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th scope="col" class="slds-text-align_right" style="width: 3.25rem;">
+                        <div class="slds-th__action slds-th__action_form">
+                            <label class="slds-checkbox">
+                                <ui:inputCheckbox aura:id="selectAll" change="{!c.selectAll}"/>
+                                <span class="slds-checkbox_faux"></span>
+                            </label>
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-th__action slds-text-link_reset" tabindex="0">
+                            <div class="slds-truncate" title="Name">Name</div>
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-th__action slds-text-link_reset" tabindex="0">
+                            <div class="slds-truncate" title="Mobile Phone">Mobile Phone</div>
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-th__action slds-text-link_reset" tabindex="0">
+                            <div class="slds-truncate" title="Email">Email</div>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.brokers}" var="broker" indexVar="index">
+                    <tr class="slds-hint-parent">
+                        <td role="gridcell" class="slds-text-align_right" style="width: 3.25rem;">
+                            <label class="slds-checkbox">
+                                <!--<ui:inputCheckbox aura:id="boxPack" data-record="{!index}" click="{!c.selectCheckbox}" text="{!broker.Id}" />-->
+                                <ui:inputCheckbox aura:id="boxPack" click="{!c.selectCheckbox}" text="{!index}" />
+                                <span class="slds-checkbox_faux"></span>
+                            </label>
+                        </td>
+                        <th scope="row">
+                            <div class="slds-truncate" title="{!broker.Name}"><a target="_blank" href="{!v.url +'/'+ broker.Id}">{!broker.Name}</a></div>
+                        </th>
+                        <td role="gridcell">
+                            <div class="slds-truncate" title="{!broker.Mobile_Phone__c}">{!broker.Mobile_Phone__c}</div>
+                        </td>
+                        <td role="gridcell">
+                            <div class="slds-truncate" title="{!broker.Email__c}"><a href="javascript:void(0);">{!broker.Email__c}</a></div>
+                        </td>
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+        
+    </div>
+
+    {!v.modal}
+</aura:component>
