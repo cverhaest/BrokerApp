@@ -1,0 +1,5 @@
+<aura:event type="COMPONENT">
+    <aura:attribute name="modalId" type="string" required="true"/>
+    <aura:attribute name="action" type="string" required="true"/>
+    <aura:attribute name="data" type="object"/>
+</aura:event>
